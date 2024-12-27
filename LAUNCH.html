@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Connection Simulator</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff7e5f, #feb47b);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        #container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #textBox {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        #submitButton {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #ff7e5f;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #submitButton:hover {
+            background-color: #feb47b;
+        }
+
+        #message {
+            display: none;
+            font-size: 20px;
+            color: #333;
+        }
+
+        #progressBar {
+            display: none;
+            width: 100%;
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        #progressBarInner {
+            height: 20px;
+            width: 0;
+            background: #ff7e5f;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <textarea id="textBox" placeholder="Type your message here..."></textarea>
+        <br>
+        <button id="submitButton" onclick="submitMessage()">Submit</button>
+        <div id="message">Connecting you to API...</div>
+        <div id="progressBar">
+            <div id="progressBarInner"></div>
+        </div>
+    </div>
+
+    <script>
+        function submitMessage() {
+            const textBox = document.getElementById('textBox');
+            const submitButton = document.getElementById('submitButton');
+            const message = document.getElementById('message');
+            const progressBar = document.getElementById('progressBar');
+            const progressBarInner = document.getElementById('progressBarInner');
+
+            textBox.style.display = 'none';
+            submitButton.style.display = 'none';
+            message.style.display = 'block';
+            progressBar.style.display = 'block';
+
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    message.innerText = "Error in connection. Server at its peak level. Try again later.";
+                } else {
+                    width++;
+                    progressBarInner.style.width = width + '%';
+                }
+            }, 600);
+        }
+    </script>
+</body>
+</html>
